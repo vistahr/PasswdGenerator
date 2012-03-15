@@ -82,9 +82,15 @@ public class PasswdController {
 	
 	private void generateAction() {
 		String password = "";
+		int length = 0;
 		
-		int length = Integer.valueOf(view.getTxtLength().getText());
-		
+		try {
+			length = Integer.valueOf(view.getTxtLength().getText());
+			
+		} catch(NumberFormatException e) {
+			view.showMessageDialog("invalid length data");
+		}
+
 		// iterate through passwdlength
 		for(int i=0;i<=length;i++) {
 			double rand = 0;
