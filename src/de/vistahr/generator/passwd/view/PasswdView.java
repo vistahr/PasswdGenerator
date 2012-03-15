@@ -37,6 +37,7 @@ import java.util.Observer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -62,7 +63,10 @@ public class PasswdView implements Observer {
 	private JTextField txtPasswdResult;
 	private JButton btnCopy;
 	private JButton btnGenerate;
-	
+	private JCheckBox chkNumeric;
+	private JCheckBox chkAlphaLC;
+	private JCheckBox chkAlphaUC;
+	private JCheckBox chksepcialKeys;
 
 
 	public JTextField getTxtPasswdResult() {
@@ -86,6 +90,26 @@ public class PasswdView implements Observer {
 	}
 
 
+	public JCheckBox getChkNumeric() {
+		return chkNumeric;
+	}
+
+
+	public JCheckBox getChkAlphaLC() {
+		return chkAlphaLC;
+	}
+
+
+	public JCheckBox getChkAlphaUC() {
+		return chkAlphaUC;
+	}
+
+
+	public JCheckBox getChksepcialKeys() {
+		return chksepcialKeys;
+	}
+
+
 	public PasswdView(Observable model) {
 		model.addObserver(this);
 		initLayout();
@@ -94,61 +118,72 @@ public class PasswdView implements Observer {
 	
 	
 	private void initLayout() {
+		
+		// systemdesign (look)
 		try {
 	        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 		
+		// mainframe
 		mainFrame = new JFrame(APP_NAME);
 		
-		// set up components
+		// for relative layoutmanager
 		BindingFactory bf = new BindingFactory();
+		
+		
+		// components
+		chkNumeric = new JCheckBox("Numeric");
+		chkAlphaLC = new JCheckBox("Alpha lowercase");
+		chkAlphaUC = new JCheckBox("Alpha uppercase");
+		chksepcialKeys = new JCheckBox("SpecialKeys");
+		
+		// labels for passwd & strength
+		JLabel lblLength = new JLabel("Password strength:");
+		JLabel lblPassword = new JLabel("Password:");
+				
+		btnCopy = new JButton("copy");
 		
 		txtPasswdResult = new JTextField();
 		txtPasswdResult.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 25));
 		
-		btnCopy 		= new JButton("copy");
-		btnGenerate 	= new JButton("Generate");
+		btnGenerate = new JButton("Generate");
 		
-		// slider
+		// slider with manual labels
 		int sldLengthMaxVal = 30;
 		sldLength = new JSlider(JSlider.HORIZONTAL,1,sldLengthMaxVal,1);
 		sldLength.setMajorTickSpacing(sldLengthMaxVal/2);
 		sldLength.setPaintTicks(true);
 		sldLength.setPaintLabels(true);
+		
 		// sliderlabels
 		Hashtable<Integer, JLabel> sldLengthLabelTable = new Hashtable<Integer, JLabel>();
 		sldLengthLabelTable.put(new Integer(1), new JLabel("Low"));
 		sldLengthLabelTable.put(new Integer(sldLengthMaxVal/2), new JLabel("Middle"));
 		sldLengthLabelTable.put(new Integer(sldLengthMaxVal), new JLabel("High"));
-		sldLength.setLabelTable(sldLengthLabelTable);
+		sldLength.setLabelTable(sldLengthLabelTable);		
 		
 		
+		// mainpanel
 		JPanel mainPanel = new JPanel(new RelativeLayout());
 		
-		JLabel lblLength = new JLabel("Password strength:");
-		JLabel lblPassword = new JLabel("Password:");
-		
-		
-		mainPanel.add(lblPassword, new RelativeConstraints(bf.leftEdge(), bf.topEdge()));
-		mainPanel.add(txtPasswdResult, new RelativeConstraints(bf.below(lblPassword), bf.leftEdge(), bf.leftOf(btnCopy), bf.above(lblLength)));
-		
+		mainPanel.add(chkNumeric, new RelativeConstraints(bf.leftEdge(), bf.topEdge()));
+		mainPanel.add(chkAlphaLC, new RelativeConstraints(bf.rightOf(chkNumeric), bf.topEdge()));
+		mainPanel.add(chkAlphaUC, new RelativeConstraints(bf.topEdge(), bf.rightOf(chkAlphaLC)));
+		mainPanel.add(chksepcialKeys, new RelativeConstraints(bf.topEdge(), bf.rightOf(chkAlphaUC)));		
+		mainPanel.add(lblPassword, new RelativeConstraints(bf.leftEdge(), bf.below(chkNumeric)));
+		mainPanel.add(txtPasswdResult, new RelativeConstraints(bf.leftEdge(), bf.below(lblPassword), bf.leftOf(btnCopy)));
 		mainPanel.add(btnCopy, new RelativeConstraints(bf.rightEdge(), bf.below(lblPassword)));
-		
-		
 		mainPanel.add(lblLength, new RelativeConstraints(bf.above(sldLength), bf.leftEdge()));
-		mainPanel.add(sldLength, new RelativeConstraints(bf.bottomEdge(), bf.leftEdge()));
-		
-		
-		
+		mainPanel.add(sldLength, new RelativeConstraints(bf.bottomEdge(), bf.leftEdge(), bf.leftOf(btnGenerate)));
 		mainPanel.add(btnGenerate, new RelativeConstraints(bf.bottomEdge(), bf.rightEdge()));
 		
 		mainFrame.add(mainPanel);
 		
 		// frame settings
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setPreferredSize(new Dimension(400,200));
+		mainFrame.setPreferredSize(new Dimension(500,200));
 		mainFrame.pack();
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setResizable(true);

@@ -54,10 +54,21 @@ public class PasswdController {
 		model = m;
 		view = v;
 		addListenersAction();
-		
-		// init settings
+		initDataAction();
+	}
+	
+	
+	private void initDataAction() {
+		// init componentdata
 		model.setLength(6);
 		model.setPassword("");
+		// set all boxes checked
+		view.getChkAlphaLC().setSelected(true);
+		view.getChkAlphaUC().setSelected(true);
+		view.getChkNumeric().setSelected(true);
+		view.getChksepcialKeys().setSelected(true);
+		// focus to generate button
+		view.getBtnGenerate().requestFocus();
 	}
 	
 	

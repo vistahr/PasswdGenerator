@@ -32,7 +32,7 @@ package de.vistahr.generator;
 public class Password {
 
 	
-	public String generate() {
+	public String generate(int[] validAsciiChars) {
 		return ""; // TODO
 	}
 	
