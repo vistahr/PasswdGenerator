@@ -171,11 +171,15 @@ public class PasswdView implements Observer {
 		mainPanel.add(chkNumeric, new RelativeConstraints(bf.leftEdge(), bf.topEdge()));
 		mainPanel.add(chkAlphaLC, new RelativeConstraints(bf.rightOf(chkNumeric), bf.topEdge()));
 		mainPanel.add(chkAlphaUC, new RelativeConstraints(bf.topEdge(), bf.rightOf(chkAlphaLC)));
-		mainPanel.add(chksepcialKeys, new RelativeConstraints(bf.topEdge(), bf.rightOf(chkAlphaUC)));		
+		mainPanel.add(chksepcialKeys, new RelativeConstraints(bf.topEdge(), bf.rightOf(chkAlphaUC)));	
+		
 		mainPanel.add(lblPassword, new RelativeConstraints(bf.leftEdge(), bf.below(chkNumeric)));
-		mainPanel.add(txtPasswdResult, new RelativeConstraints(bf.leftEdge(), bf.below(lblPassword), bf.leftOf(btnCopy)));
+		
+		mainPanel.add(txtPasswdResult, new RelativeConstraints(bf.leftEdge(), bf.below(lblPassword), bf.leftOf(btnCopy), bf.above(lblLength)));
 		mainPanel.add(btnCopy, new RelativeConstraints(bf.rightEdge(), bf.below(lblPassword)));
+		
 		mainPanel.add(lblLength, new RelativeConstraints(bf.above(sldLength), bf.leftEdge()));
+		
 		mainPanel.add(sldLength, new RelativeConstraints(bf.bottomEdge(), bf.leftEdge(), bf.leftOf(btnGenerate)));
 		mainPanel.add(btnGenerate, new RelativeConstraints(bf.bottomEdge(), bf.rightEdge()));
 		
@@ -183,7 +187,7 @@ public class PasswdView implements Observer {
 		
 		// frame settings
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setPreferredSize(new Dimension(500,200));
+		mainFrame.setPreferredSize(new Dimension(520,250));
 		mainFrame.pack();
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setResizable(true);
