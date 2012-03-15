@@ -26,21 +26,15 @@
  * 	authors and should not be interpreted as representing official policies, either expressed
  * 	or implied, of Vince.
  */
-package de.vistahr.generator.passwd;
+package de.vistahr.generator;
 
-import de.vistahr.generator.passwd.controller.PasswdController;
-import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.PasswdView;
 
-public class PasswdGenerator {
+public class Password {
 
 	
-	
-	public static void main(String[] args) {
-		PasswdViewModel model = new PasswdViewModel(new String(""), 0);
-		PasswdView view = new PasswdView(model);
-		
-		new PasswdController(model, view);
+	public String generate() {
+		return ""; // TODO
 	}
+	
 	
 }
