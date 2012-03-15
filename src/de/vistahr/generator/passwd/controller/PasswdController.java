@@ -28,13 +28,15 @@
  */
 package de.vistahr.generator.passwd.controller;
 
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
+import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -77,6 +79,17 @@ public class PasswdController {
 			public void stateChanged(ChangeEvent e) {
 				changeLengthAction();
 			}
+		});
+		view.getTxtPasswdResult().addComponentListener(new ComponentListener() {@Override
+			public void componentShown(ComponentEvent e) {}
+			@Override
+			public void componentResized(ComponentEvent e) {
+				resizeTxtPasswdResultAction(e);
+			}
+			@Override
+			public void componentMoved(ComponentEvent e) {}
+			@Override
+			public void componentHidden(ComponentEvent e) {}
 		});
 	}
 	
@@ -123,6 +136,12 @@ public class PasswdController {
 	
 	private void copyPasswdToClipboardAction() {
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(view.getTxtPasswdResult().getText()), null);
+	}
+	
+	
+	private void resizeTxtPasswdResultAction(ComponentEvent ev) {
+		Integer newHeigth = Integer.valueOf(((JTextField)ev.getSource()).getHeight()/2);
+		view.getTxtPasswdResult().setFont(new Font(Font.SANS_SERIF, Font.PLAIN, newHeigth));
 	}
 	
 }

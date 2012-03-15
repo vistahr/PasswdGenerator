@@ -29,6 +29,7 @@
 package de.vistahr.generator.passwd.view;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.util.Hashtable;
 import java.util.Observable;
@@ -105,17 +106,19 @@ public class PasswdView implements Observer {
 		BindingFactory bf = new BindingFactory();
 		
 		txtPasswdResult = new JTextField();
+		txtPasswdResult.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 25));
+		
 		btnCopy 		= new JButton("copy");
 		btnGenerate 	= new JButton("Generate");
 		
 		// slider
 		int sldLengthMaxVal = 30;
-		sldLength		= new JSlider(JSlider.HORIZONTAL,1,sldLengthMaxVal,1);
+		sldLength = new JSlider(JSlider.HORIZONTAL,1,sldLengthMaxVal,1);
 		sldLength.setMajorTickSpacing(sldLengthMaxVal/2);
 		sldLength.setPaintTicks(true);
 		sldLength.setPaintLabels(true);
 		// sliderlabels
-		Hashtable sldLengthLabelTable = new Hashtable();
+		Hashtable<Integer, JLabel> sldLengthLabelTable = new Hashtable<Integer, JLabel>();
 		sldLengthLabelTable.put(new Integer(1), new JLabel("Low"));
 		sldLengthLabelTable.put(new Integer(sldLengthMaxVal/2), new JLabel("Middle"));
 		sldLengthLabelTable.put(new Integer(sldLengthMaxVal), new JLabel("High"));
@@ -124,15 +127,18 @@ public class PasswdView implements Observer {
 		
 		JPanel mainPanel = new JPanel(new RelativeLayout());
 		
+		JLabel lblLength = new JLabel("Password strength:");
 		JLabel lblPassword = new JLabel("Password:");
+		
+		
 		mainPanel.add(lblPassword, new RelativeConstraints(bf.leftEdge(), bf.topEdge()));
-		mainPanel.add(txtPasswdResult, new RelativeConstraints(bf.below(lblPassword), bf.leftEdge(), bf.leftOf(btnCopy)));
+		mainPanel.add(txtPasswdResult, new RelativeConstraints(bf.below(lblPassword), bf.leftEdge(), bf.leftOf(btnCopy), bf.above(lblLength)));
 		
 		mainPanel.add(btnCopy, new RelativeConstraints(bf.rightEdge(), bf.below(lblPassword)));
 		
-		JLabel lblLength = new JLabel("Password strength:");
-		mainPanel.add(lblLength, new RelativeConstraints(bf.below(txtPasswdResult), bf.leftEdge()));
-		mainPanel.add(sldLength, new RelativeConstraints(bf.below(lblLength), bf.leftEdge()));
+		
+		mainPanel.add(lblLength, new RelativeConstraints(bf.above(sldLength), bf.leftEdge()));
+		mainPanel.add(sldLength, new RelativeConstraints(bf.bottomEdge(), bf.leftEdge()));
 		
 		
 		
@@ -142,10 +148,10 @@ public class PasswdView implements Observer {
 		
 		// frame settings
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setPreferredSize(new Dimension(400,170));
+		mainFrame.setPreferredSize(new Dimension(400,200));
 		mainFrame.pack();
 		mainFrame.setLocationRelativeTo(null);
-		
+		mainFrame.setResizable(true);
 		
 		// icon - frame
 		try {
