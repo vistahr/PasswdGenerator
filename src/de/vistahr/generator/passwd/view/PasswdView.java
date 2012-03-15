@@ -30,6 +30,7 @@ package de.vistahr.generator.passwd.view;
 
 import java.awt.Dimension;
 import java.awt.Image;
+import java.util.Hashtable;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -39,6 +40,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
@@ -55,15 +57,11 @@ public class PasswdView implements Observer {
 	public static final String RES_ICON_APP = "key.png";
 	
 	private JFrame mainFrame;
-	private JTextField txtLength; // TODO slider
+	private JSlider sldLength;
 	private JTextField txtPasswdResult;
 	private JButton btnCopy;
 	private JButton btnGenerate;
 	
-	
-	public JTextField getTxtLength() {
-		return txtLength;
-	}
 
 
 	public JTextField getTxtPasswdResult() {
@@ -78,6 +76,12 @@ public class PasswdView implements Observer {
 
 	public JButton getBtnCopy() {
 		return btnCopy;
+	}
+
+
+
+	public JSlider getSldLength() {
+		return sldLength;
 	}
 
 
@@ -101,9 +105,21 @@ public class PasswdView implements Observer {
 		BindingFactory bf = new BindingFactory();
 		
 		txtPasswdResult = new JTextField();
-		txtLength 		= new JTextField(10);
 		btnCopy 		= new JButton("copy");
 		btnGenerate 	= new JButton("Generate");
+		
+		// slider
+		int sldLengthMaxVal = 30;
+		sldLength		= new JSlider(JSlider.HORIZONTAL,1,sldLengthMaxVal,1);
+		sldLength.setMajorTickSpacing(sldLengthMaxVal/2);
+		sldLength.setPaintTicks(true);
+		sldLength.setPaintLabels(true);
+		// sliderlabels
+		Hashtable sldLengthLabelTable = new Hashtable();
+		sldLengthLabelTable.put(new Integer(1), new JLabel("Low"));
+		sldLengthLabelTable.put(new Integer(sldLengthMaxVal/2), new JLabel("Middle"));
+		sldLengthLabelTable.put(new Integer(sldLengthMaxVal), new JLabel("High"));
+		sldLength.setLabelTable(sldLengthLabelTable);
 		
 		
 		JPanel mainPanel = new JPanel(new RelativeLayout());
@@ -114,9 +130,9 @@ public class PasswdView implements Observer {
 		
 		mainPanel.add(btnCopy, new RelativeConstraints(bf.rightEdge(), bf.below(lblPassword)));
 		
-		JLabel lblLength = new JLabel("Length:");
+		JLabel lblLength = new JLabel("Password strength:");
 		mainPanel.add(lblLength, new RelativeConstraints(bf.below(txtPasswdResult), bf.leftEdge()));
-		mainPanel.add(txtLength, new RelativeConstraints(bf.below(lblLength), bf.leftEdge()));
+		mainPanel.add(sldLength, new RelativeConstraints(bf.below(lblLength), bf.leftEdge()));
 		
 		
 		
@@ -126,7 +142,7 @@ public class PasswdView implements Observer {
 		
 		// frame settings
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setPreferredSize(new Dimension(400,150));
+		mainFrame.setPreferredSize(new Dimension(400,170));
 		mainFrame.pack();
 		mainFrame.setLocationRelativeTo(null);
 		
@@ -144,7 +160,7 @@ public class PasswdView implements Observer {
 
 	@Override
 	public void update(Observable o, Object model) {
-		getTxtLength().setText(String.valueOf(((PasswdViewModel)model).getLength()));
+		getSldLength().setValue(((PasswdViewModel)model).getLength());
 		getTxtPasswdResult().setText(((PasswdViewModel)model).getPassword());
 	}
 	

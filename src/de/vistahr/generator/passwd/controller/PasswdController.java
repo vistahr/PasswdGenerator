@@ -35,6 +35,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import de.vistahr.generator.passwd.model.PasswdViewModel;
 import de.vistahr.generator.passwd.view.PasswdView;
 
@@ -63,18 +66,16 @@ public class PasswdController {
 				generateAction();
 			}
 		});
-		view.getTxtLength().addFocusListener(new FocusListener() {
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				changeLengthAction();
-			}
-			@Override
-			public void focusGained(FocusEvent arg0) {}
-		});
 		view.getBtnCopy().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				copyPasswdToClipboardAction();
+			}
+		});
+		view.getSldLength().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				changeLengthAction();
 			}
 		});
 	}
@@ -84,9 +85,9 @@ public class PasswdController {
 		String password = "";
 		int length = 0;
 		
+		// get the views length
 		try {
-			length = Integer.valueOf(view.getTxtLength().getText());
-			
+			length = Integer.valueOf(view.getSldLength().getValue());
 		} catch(NumberFormatException e) {
 			view.showMessageDialog("invalid length data");
 		}
@@ -111,7 +112,7 @@ public class PasswdController {
 	private void changeLengthAction() {
 		Integer length = model.getLength();
 		try {
-			length = Integer.valueOf(view.getTxtLength().getText());
+			length = Integer.valueOf(view.getSldLength().getValue());
 			
 		} catch(NumberFormatException e) {
 			view.showMessageDialog("invalid length data");
