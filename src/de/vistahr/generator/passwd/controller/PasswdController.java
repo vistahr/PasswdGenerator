@@ -35,11 +35,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import de.vistahr.generator.Keys;
+import de.vistahr.generator.Password;
 import de.vistahr.generator.passwd.model.PasswdViewModel;
 import de.vistahr.generator.passwd.view.PasswdView;
 
@@ -115,21 +118,16 @@ public class PasswdController {
 		} catch(NumberFormatException e) {
 			view.showMessageDialog("invalid length data");
 		}
-
-		// iterate through passwdlength
-		for(int i=0;i<=length;i++) {
-			double rand = 0;
-			// run, while getting valid char
-			while(true) {
-				rand =  Math.random() * 127;
-				if((rand >= 61 && rand <= 122) || (rand >= 48 && rand <= 57) || (rand >= 65 && rand <= 90) ) {
-					password += (char) rand;
-					break;
-				}
-			}	
-		}
 		
-		model.setPassword(password);
+		// TODO - get view data and set the arraylist
+		ArrayList<Keys> keys = new ArrayList<Keys>();
+		keys.add(Keys.ALPHA_UC);
+		keys.add(Keys.ALPHA_LC);
+		keys.add(Keys.SPECIAL);
+		keys.add(Keys.NUMERIC);
+		
+		// generate Password and set the model
+		model.setPassword(Password.generate(length, keys));
 	}
 	
 	

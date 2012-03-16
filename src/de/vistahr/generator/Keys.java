@@ -28,40 +28,6 @@
  */
 package de.vistahr.generator;
 
-import java.util.ArrayList;
-
-
-public class Password {
-	
-	
-	public static String generate(int length, ArrayList<Keys> keys) {
-		
-		String password; // StringBuilder?
-		
-		// TODO iterate through arraylist
-			// switch keys enum
-				// every case has a given random range
-		//	//	//
-		
-		/*
-		// iterate through passwdlength
-		for(int i=0;i<=length;i++) {
-			double rand = 0;
-			// run, while getting valid char
-			while(true) {
-				rand =  Math.random() * 127;
-				if((rand >= 61 && rand <= 122) || (rand >= 48 && rand <= 57) || (rand >= 65 && rand <= 90) ) {
-					password += (char) rand;
-					break;
-				}
-			}	
-		}
-		*/
-		
-		
-		
-		return ""; // TODO
-	}
-	
-	
+public enum Keys {
+	ALPHA_UC, ALPHA_LC, SPECIAL, NUMERIC
 }
