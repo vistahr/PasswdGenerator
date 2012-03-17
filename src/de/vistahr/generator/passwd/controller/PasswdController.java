@@ -66,10 +66,10 @@ public class PasswdController {
 		model.setLength(6);
 		model.setPassword("");
 		// set all boxes checked
-		view.getChkAlphaLC().setSelected(true);
-		view.getChkAlphaUC().setSelected(true);
-		view.getChkNumeric().setSelected(true);
-		view.getChksepcialKeys().setSelected(true);
+		model.setChkAlphaLC(true);
+		model.setChkAlphaUC(true);
+		model.setChkNumeric(true);
+		model.setChkSpecial(true);
 		// focus to generate button
 		view.getBtnGenerate().requestFocus();
 	}
@@ -79,7 +79,11 @@ public class PasswdController {
 		view.getBtnGenerate().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				generateAction();
+				try {
+					generateAction();
+				} catch(IllegalArgumentException e) {
+					view.showMessageDialog(e.getMessage());
+				}
 			}
 		});
 		view.getBtnCopy().addActionListener(new ActionListener() {
@@ -105,11 +109,34 @@ public class PasswdController {
 			@Override
 			public void componentHidden(ComponentEvent e) {}
 		});
+		view.getChkAlphaLC().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				model.setChkAlphaLC(view.getChkAlphaLC().isSelected());
+			}
+		});
+		view.getChkAlphaUC().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				model.setChkAlphaUC(view.getChkAlphaUC().isSelected());
+			}
+		});
+		view.getChkNumeric().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				model.setChkNumeric(view.getChkNumeric().isSelected());
+			}
+		});
+		view.getChkSepcialKeys().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				model.setChkSpecial(view.getChkSepcialKeys().isSelected());
+			}
+		});
 	}
 	
 	
 	private void generateAction() {
-		String password = "";
 		int length = 0;
 		
 		// get the views length
@@ -119,13 +146,26 @@ public class PasswdController {
 			view.showMessageDialog("invalid length data");
 		}
 		
-		// TODO - get view data and set the arraylist
+		// get view data and set the arraylist
 		ArrayList<Keys> keys = new ArrayList<Keys>();
-		keys.add(Keys.ALPHA_UC);
-		keys.add(Keys.ALPHA_LC);
-		keys.add(Keys.SPECIAL);
-		keys.add(Keys.NUMERIC);
+		if(model.isChkAlphaLC()) {
+			keys.add(Keys.ALPHA_LC);
+		}
+		if(model.isChkAlphaUC()) {
+			keys.add(Keys.ALPHA_UC);
+		}
+		if(model.isChkNumeric()) {
+			keys.add(Keys.NUMERIC);
+		}
+		if(model.isChkSpecial()) {
+			keys.add(Keys.SPECIAL);
+		}
 		
+		// keysize should not <= 0		
+		if(keys.size()<=0) {
+			throw new IllegalArgumentException("no keyset is selected");
+		}
+
 		// generate Password and set the model
 		model.setPassword(Password.generate(length, keys));
 	}

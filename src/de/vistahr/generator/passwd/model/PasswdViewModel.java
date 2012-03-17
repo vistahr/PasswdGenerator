@@ -35,6 +35,17 @@ public class PasswdViewModel extends Observable {
 	private String password;
 	private int length;
 	
+	private boolean chkAlphaLC;
+	private boolean chkAlphaUC;
+	private boolean chkSpecial;
+	private boolean chkNumeric;
+	
+	
+	public PasswdViewModel(String p, int l) {
+		password = p;
+		length = l;
+	}
+	
 	
 	public String getPassword() {
 		return password;
@@ -43,14 +54,8 @@ public class PasswdViewModel extends Observable {
 	public int getLength() {
 		return length;
 	}
+		
 	
-	
-	
-	public PasswdViewModel(String p, int l) {
-		password = p;
-		length = l;
-	}
-
 	
 	public void setPassword(String p) {
 		password = new String(p);
@@ -67,5 +72,54 @@ public class PasswdViewModel extends Observable {
 		setChanged();
 		notifyObservers(this);
 	}
+
+
+	public boolean isChkAlphaLC() {
+		return chkAlphaLC;
+	}
+
+
+	public void setChkAlphaLC(boolean chkAlphaLC) {
+		this.chkAlphaLC = chkAlphaLC;
+		setChanged();
+		notifyObservers(this);
+	}
+
+
+	public boolean isChkAlphaUC() {
+		return chkAlphaUC;
+	}
+
+
+	public void setChkAlphaUC(boolean chkAlphaUC) {
+		this.chkAlphaUC = chkAlphaUC;
+		setChanged();
+		notifyObservers(this);
+	}
+
+
+	public boolean isChkSpecial() {
+		return chkSpecial;
+	}
+
+
+	public void setChkSpecial(boolean chkSpecial) {
+		this.chkSpecial = chkSpecial;
+		setChanged();
+		notifyObservers(this);
+	}
+
+
+	public boolean isChkNumeric() {
+		return chkNumeric;
+	}
+
+
+	public void setChkNumeric(boolean chkNumeric) {
+		this.chkNumeric = chkNumeric;
+		setChanged();
+		notifyObservers(this);
+	}
+	
 	
 }

@@ -105,7 +105,7 @@ public class PasswdView implements Observer {
 	}
 
 
-	public JCheckBox getChksepcialKeys() {
+	public JCheckBox getChkSepcialKeys() {
 		return chksepcialKeys;
 	}
 
@@ -207,6 +207,11 @@ public class PasswdView implements Observer {
 	public void update(Observable o, Object model) {
 		getSldLength().setValue(((PasswdViewModel)model).getLength());
 		getTxtPasswdResult().setText(((PasswdViewModel)model).getPassword());
+		
+		getChkAlphaLC().setSelected(((PasswdViewModel)model).isChkAlphaLC());
+		getChkAlphaUC().setSelected(((PasswdViewModel)model).isChkAlphaUC());
+		getChkNumeric().setSelected(((PasswdViewModel)model).isChkNumeric());
+		getChkSepcialKeys().setSelected(((PasswdViewModel)model).isChkSpecial());
 	}
 	
 

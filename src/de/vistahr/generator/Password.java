@@ -29,39 +29,69 @@
 package de.vistahr.generator;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
 
 public class Password {
 	
 	
 	public static String generate(int length, ArrayList<Keys> keys) {
-		
-		String password; // StringBuilder?
-		
-		// TODO iterate through arraylist
-			// switch keys enum
-				// every case has a given random range
-		//	//	//
-		
-		/*
-		// iterate through passwdlength
-		for(int i=0;i<=length;i++) {
-			double rand = 0;
-			// run, while getting valid char
-			while(true) {
-				rand =  Math.random() * 127;
-				if((rand >= 61 && rand <= 122) || (rand >= 48 && rand <= 57) || (rand >= 65 && rand <= 90) ) {
-					password += (char) rand;
-					break;
-				}
-			}	
+		if(length <= 0) {
+			throw new IllegalArgumentException("Non valid length");
 		}
-		*/
 		
+		StringBuilder password = new StringBuilder();
 		
+		for(int i=0;i<length;i++) {
+			password.append(generateRandomChar(keys));
+		}
 		
-		return ""; // TODO
+		return password.toString();
+	}
+
+	
+	public static char generateRandomChar(ArrayList<Keys> keys) {
+		Iterator<Keys> iter = keys.iterator();
+		
+		ArrayList<Integer> totalRands = new ArrayList<Integer>();
+		
+
+		while(iter.hasNext()) {
+			switch(iter.next()) {
+				case ALPHA_LC:
+					// >= 97 - 122 <=
+					totalRands.add(randomBetween(97,122));
+					break;
+				case ALPHA_UC:
+					// >= 65 - 90 <=
+					totalRands.add(randomBetween(65,90));
+					break;
+				case SPECIAL:
+					// >= 33 - 47 <=
+					totalRands.add(randomBetween(33,47));
+					// >= 58 - 64 <=
+					totalRands.add(randomBetween(58,64));
+					// >= 91 - 96 <=
+					totalRands.add(randomBetween(91,96));
+					// >= 123 - 126 <=
+					totalRands.add(randomBetween(123,126));
+					break;
+				case NUMERIC:
+					// >= 48 - 57 <=
+					totalRands.add(randomBetween(48,57));
+					break;
+			}
+		}
+		int tmpIntChar = (int)totalRands.get(randomBetween(0, totalRands.size()-1));
+		
+		return (char)tmpIntChar;
 	}
 	
+	
+	private static int randomBetween(int min, int max) {
+		Random rand = new Random();
+		 return rand.nextInt(max-min+1)+min;
+	}
 	
 }
