@@ -40,6 +40,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -47,6 +48,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import de.vistahr.generator.passwd.model.PasswdViewModel;
+import de.vistahr.generator.passwd.view.menu.PasswdMenu;
 import edu.cmu.relativelayout.BindingFactory;
 import edu.cmu.relativelayout.RelativeConstraints;
 import edu.cmu.relativelayout.RelativeLayout;
@@ -67,7 +69,7 @@ public class PasswdView implements Observer {
 	private JCheckBox chkAlphaLC;
 	private JCheckBox chkAlphaUC;
 	private JCheckBox chksepcialKeys;
-
+	private PasswdMenu mainMenu;
 
 	public JTextField getTxtPasswdResult() {
 		return txtPasswdResult;
@@ -110,6 +112,18 @@ public class PasswdView implements Observer {
 	}
 
 
+	public PasswdMenu getMainMenu() {
+		return mainMenu;
+	}
+	
+	
+	public void setJMenuBar(JMenuBar menu) {
+		mainFrame.setJMenuBar(menu);
+	}
+	
+	
+
+
 	public PasswdView(Observable model) {
 		model.addObserver(this);
 		initLayout();
@@ -118,6 +132,10 @@ public class PasswdView implements Observer {
 	
 	
 	private void initLayout() {
+		// set app name for mac
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", APP_NAME);
+		// use osx jmenu 
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		
 		// systemdesign (look)
 		try {
@@ -147,6 +165,7 @@ public class PasswdView implements Observer {
 		
 		txtPasswdResult = new JTextField();
 		txtPasswdResult.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 25));
+		txtPasswdResult.setEditable(false);
 		
 		btnGenerate = new JButton("Generate");
 		
@@ -192,14 +211,17 @@ public class PasswdView implements Observer {
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setResizable(true);
 		
-		// icon - frame
+		// add icon
 		try {
 			Image icon = new ImageIcon(getClass().getResource(RES_PATH + RES_ICON_APP)).getImage();
 			mainFrame.setIconImage(icon);
 		} catch(NullPointerException e) {
 			showMessageDialog("Cannot load resource " + RES_PATH + RES_ICON_APP);
 		}
+		
 	}
+	
+	
 	
 	
 
@@ -214,11 +236,13 @@ public class PasswdView implements Observer {
 		getChkSepcialKeys().setSelected(((PasswdViewModel)model).isChkSpecial());
 	}
 	
-
+/*
 	public void showMessageDialog(String message) {
 		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.WARNING_MESSAGE);
-	}
+	}*/
 	
-	
+	public static void showMessageDialog(String message) {
+		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.WARNING_MESSAGE);
+	}	
 	
 }

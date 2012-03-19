@@ -26,21 +26,62 @@
  * 	authors and should not be interpreted as representing official policies, either expressed
  * 	or implied, of Vince.
  */
-package de.vistahr.generator.passwd;
+package de.vistahr.generator.passwd.view.menu;
 
-import de.vistahr.generator.passwd.controller.PasswdMainController;
-import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.PasswdView;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
-public class PasswdGenerator {
 
+public class PasswdMenu {
+	
+	// bar
+	JMenuBar mainMenu;
+	// main menu
+	JMenu fileMenu;
+	JMenu helpMenu;
+	//items
+	JMenuItem copyItem;
+	JMenuItem aboutItem;
 	
 	
-	public static void main(String[] args) {
-		PasswdViewModel model = new PasswdViewModel(new String(""), 0);
-		PasswdView view = new PasswdView(model);
-		
-		new PasswdMainController(model, view);
+	public JMenuBar getMainMenu() {
+		return mainMenu;
 	}
+	
+
+	public JMenuItem getAboutItem() {
+		return aboutItem;
+	}
+
+
+	public JMenuItem getCopyItem() {
+		return copyItem;
+	}
+
+
+	public PasswdMenu() {
+		mainMenu = new JMenuBar();
+		buildMenu();
+	}
+	
+	
+	private void buildMenu() {
+		// file menu
+		fileMenu = new JMenu("File");
+		copyItem = new JMenuItem("Copy");
+		fileMenu.add(copyItem);
+		
+		
+		// Help menu
+		helpMenu = new JMenu("Help");
+		//items
+		aboutItem = new JMenuItem("About");
+		helpMenu.add(aboutItem);
+		
+		mainMenu.add(fileMenu);
+		mainMenu.add(helpMenu);
+	}
+	
 	
 }

@@ -26,21 +26,42 @@
  * 	authors and should not be interpreted as representing official policies, either expressed
  * 	or implied, of Vince.
  */
-package de.vistahr.generator.passwd;
+package de.vistahr.generator.passwd.controller;
 
-import de.vistahr.generator.passwd.controller.PasswdMainController;
-import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.PasswdView;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class PasswdGenerator {
+import de.vistahr.generator.passwd.view.menu.PasswdAboutDialog;
+import de.vistahr.generator.passwd.view.menu.PasswdMenu;
 
+
+public class PasswdMenuController {
 	
+	PasswdMenu view;
 	
-	public static void main(String[] args) {
-		PasswdViewModel model = new PasswdViewModel(new String(""), 0);
-		PasswdView view = new PasswdView(model);
-		
-		new PasswdMainController(model, view);
+	public PasswdMenuController(PasswdMenu v) {
+		view = v;
+		addListenersAction();
 	}
+	
+	
+	
+	private void addListenersAction() {
+		view.getAboutItem().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// new about dialog
+				new PasswdAboutDialog();
+			}
+		});
+		view.getCopyItem().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// copy action
+				// TODO
+			}
+		});
+	}
+	
 	
 }

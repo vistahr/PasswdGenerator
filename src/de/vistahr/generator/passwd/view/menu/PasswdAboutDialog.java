@@ -26,21 +26,59 @@
  * 	authors and should not be interpreted as representing official policies, either expressed
  * 	or implied, of Vince.
  */
-package de.vistahr.generator.passwd;
+package de.vistahr.generator.passwd.view.menu;
 
-import de.vistahr.generator.passwd.controller.PasswdMainController;
-import de.vistahr.generator.passwd.model.PasswdViewModel;
+import java.awt.Dimension;
+
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import de.vistahr.generator.passwd.view.PasswdView;
 
-public class PasswdGenerator {
+public class PasswdAboutDialog {
 
+	JDialog about;
 	
 	
-	public static void main(String[] args) {
-		PasswdViewModel model = new PasswdViewModel(new String(""), 0);
-		PasswdView view = new PasswdView(model);
+	public PasswdAboutDialog() {
+		about = new JDialog();
+		// set dialog components
+		initDialog();
+		about.setLocationRelativeTo(null);
+		about.setPreferredSize(new Dimension(300,250));
+		about.pack();
+		about.setVisible(true);
+	}
+	
+	private void initDialog() {
+		JPanel mainPanel = new JPanel();
 		
-		new PasswdMainController(model, view);
+		ImageIcon logo = null;
+		// add icon
+		try {
+			logo = new ImageIcon(getClass().getResource(PasswdView.RES_PATH + PasswdView.RES_ICON_APP));
+		} catch(NullPointerException e) {
+			PasswdView.showMessageDialog("Cannot load resource " + PasswdView.RES_PATH + PasswdView.RES_ICON_APP);
+		}
+		
+		//picture
+		JLabel lblLogo = new JLabel(logo);
+		
+		//name
+		JLabel lblName = new JLabel();
+		lblName.setText("<html><br /><b>PasswdGenerator</b><br /><br /></html>");
+		
+		// about
+		JLabel lblAbout = new JLabel();
+		lblAbout.setText("<html>developed by vistahr <br /> version 0.1 (stable release)</html>");
+		
+		mainPanel.add(lblLogo);
+		mainPanel.add(lblName);
+		mainPanel.add(lblAbout);
+		
+		about.add(mainPanel);
 	}
 	
 }

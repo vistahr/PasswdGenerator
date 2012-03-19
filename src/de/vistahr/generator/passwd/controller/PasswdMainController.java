@@ -45,19 +45,26 @@ import de.vistahr.generator.Keys;
 import de.vistahr.generator.Password;
 import de.vistahr.generator.passwd.model.PasswdViewModel;
 import de.vistahr.generator.passwd.view.PasswdView;
+import de.vistahr.generator.passwd.view.menu.PasswdMenu;
 
 
-public class PasswdController {
+public class PasswdMainController {
 	
 	private PasswdViewModel model;
 	private PasswdView view;
 	
 	
-	public PasswdController(PasswdViewModel m, PasswdView v) {
+	public PasswdMainController(PasswdViewModel m, PasswdView v) {
 		model = m;
 		view = v;
 		addListenersAction();
 		initDataAction();
+		
+		// init
+		PasswdMenu pmView = new PasswdMenu();
+		new PasswdMenuController(pmView);
+		// connect with main view
+		view.setJMenuBar(pmView.getMainMenu());
 	}
 	
 	
@@ -82,7 +89,7 @@ public class PasswdController {
 				try {
 					generateAction();
 				} catch(IllegalArgumentException e) {
-					view.showMessageDialog(e.getMessage());
+					PasswdView.showMessageDialog(e.getMessage());
 				}
 			}
 		});
@@ -143,7 +150,7 @@ public class PasswdController {
 		try {
 			length = Integer.valueOf(view.getSldLength().getValue());
 		} catch(NumberFormatException e) {
-			view.showMessageDialog("invalid length data");
+			PasswdView.showMessageDialog("invalid length data");
 		}
 		
 		// get view data and set the arraylist
@@ -177,13 +184,13 @@ public class PasswdController {
 			length = Integer.valueOf(view.getSldLength().getValue());
 			
 		} catch(NumberFormatException e) {
-			view.showMessageDialog("invalid length data");
+			PasswdView.showMessageDialog("invalid length data");
 		}
 		model.setLength(length);
 	}
 	
 	
-	private void copyPasswdToClipboardAction() {
+	public void copyPasswdToClipboardAction() {
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(view.getTxtPasswdResult().getText()), null);
 	}
 	
