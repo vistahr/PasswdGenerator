@@ -5,10 +5,10 @@ import java.util.Hashtable;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 
-public class PasswdStrengthSlider extends JSlider {
+public class StrengthSlider extends JSlider {
 
 	
-	public PasswdStrengthSlider(int orientation, int min, int max, int value) {
+	public StrengthSlider(int orientation, int min, int max, int value) {
 		super(orientation, min, max, value);
 		
 		setMajorTickSpacing(max/2);

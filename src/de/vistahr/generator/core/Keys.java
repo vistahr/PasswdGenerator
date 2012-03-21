@@ -26,72 +26,8 @@
  * 	authors and should not be interpreted as representing official policies, either expressed
  * 	or implied, of Vince.
  */
-package de.vistahr.generator;
+package de.vistahr.generator.core;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
-
-
-public class Password {
-	
-	
-	public static String generate(int length, ArrayList<Keys> keys) {
-		if(length <= 0) {
-			throw new IllegalArgumentException("Non valid length");
-		}
-		
-		StringBuilder password = new StringBuilder();
-		
-		for(int i=0;i<length;i++) {
-			password.append(generateRandomChar(keys));
-		}
-		
-		return password.toString();
-	}
-
-	
-	public static char generateRandomChar(ArrayList<Keys> keys) {
-		Iterator<Keys> iter = keys.iterator();
-		
-		ArrayList<Integer> totalRands = new ArrayList<Integer>();
-		
-
-		while(iter.hasNext()) {
-			switch(iter.next()) {
-				case ALPHA_LC:
-					// >= 97 - 122 <=
-					totalRands.add(randomBetween(97,122));
-					break;
-				case ALPHA_UC:
-					// >= 65 - 90 <=
-					totalRands.add(randomBetween(65,90));
-					break;
-				case SPECIAL:
-					// >= 33 - 47 <=
-					totalRands.add(randomBetween(33,47));
-					// >= 58 - 64 <=
-					totalRands.add(randomBetween(58,64));
-					// >= 91 - 96 <=
-					totalRands.add(randomBetween(91,96));
-					// >= 123 - 126 <=
-					totalRands.add(randomBetween(123,126));
-					break;
-				case NUMERIC:
-					// >= 48 - 57 <=
-					totalRands.add(randomBetween(48,57));
-					break;
-			}
-		}
-		int tmpIntChar = (int)totalRands.get(randomBetween(0, totalRands.size()-1));
-		
-		return (char)tmpIntChar;
-	}
-	
-	
-	private static int randomBetween(int min, int max) {
-		Random rand = new Random();
-		 return rand.nextInt(max-min+1)+min;
-	}
-	
+public enum Keys {
+	ALPHA_UC, ALPHA_LC, SPECIAL, NUMERIC
 }

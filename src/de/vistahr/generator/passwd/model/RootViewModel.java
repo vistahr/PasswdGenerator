@@ -26,8 +26,100 @@
  * 	authors and should not be interpreted as representing official policies, either expressed
  * 	or implied, of Vince.
  */
-package de.vistahr.generator;
+package de.vistahr.generator.passwd.model;
 
-public enum Keys {
-	ALPHA_UC, ALPHA_LC, SPECIAL, NUMERIC
+import java.util.Observable;
+
+public class RootViewModel extends Observable {
+
+	private String password;
+	private int length;
+	
+	private boolean chkAlphaLC;
+	private boolean chkAlphaUC;
+	private boolean chkSpecial;
+	private boolean chkNumeric;
+	
+	
+	public RootViewModel(String p, int l) {
+		password = p;
+		length = l;
+	}
+	
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public int getLength() {
+		return length;
+	}
+		
+	
+	
+	public void setPassword(String p) {
+		password = new String(p);
+		setChanged();
+		notifyObservers(this);
+	}
+	
+	public void setLength(int l) {
+		// only positive
+		if(l <= 0) {
+			throw new IllegalArgumentException("Length empty");
+		}
+		length = l;
+		setChanged();
+		notifyObservers(this);
+	}
+
+
+	public boolean isChkAlphaLC() {
+		return chkAlphaLC;
+	}
+
+
+	public void setChkAlphaLC(boolean chkAlphaLC) {
+		this.chkAlphaLC = chkAlphaLC;
+		setChanged();
+		notifyObservers(this);
+	}
+
+
+	public boolean isChkAlphaUC() {
+		return chkAlphaUC;
+	}
+
+
+	public void setChkAlphaUC(boolean chkAlphaUC) {
+		this.chkAlphaUC = chkAlphaUC;
+		setChanged();
+		notifyObservers(this);
+	}
+
+
+	public boolean isChkSpecial() {
+		return chkSpecial;
+	}
+
+
+	public void setChkSpecial(boolean chkSpecial) {
+		this.chkSpecial = chkSpecial;
+		setChanged();
+		notifyObservers(this);
+	}
+
+
+	public boolean isChkNumeric() {
+		return chkNumeric;
+	}
+
+
+	public void setChkNumeric(boolean chkNumeric) {
+		this.chkNumeric = chkNumeric;
+		setChanged();
+		notifyObservers(this);
+	}
+	
+	
 }

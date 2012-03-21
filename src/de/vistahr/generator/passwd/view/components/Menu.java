@@ -26,7 +26,7 @@
  * 	authors and should not be interpreted as representing official policies, either expressed
  * 	or implied, of Vince.
  */
-package de.vistahr.generator.passwd.view;
+package de.vistahr.generator.passwd.view.components;
 
 import java.awt.event.KeyEvent;
 
@@ -37,7 +37,7 @@ import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
 
-public class PasswdMenu {
+public class Menu {
 	
 	// bar
 	JMenuBar menuBar;
@@ -83,7 +83,7 @@ public class PasswdMenu {
 	}
 
 
-	public PasswdMenu() {
+	public Menu() {
 		menuBar = new JMenuBar();
 		buildMenu();
 	}

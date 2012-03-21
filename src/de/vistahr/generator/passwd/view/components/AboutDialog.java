@@ -26,7 +26,7 @@
  * 	authors and should not be interpreted as representing official policies, either expressed
  * 	or implied, of Vince.
  */
-package de.vistahr.generator.passwd.view;
+package de.vistahr.generator.passwd.view.components;
 
 import java.awt.Dimension;
 
@@ -35,15 +35,14 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import de.vistahr.generator.passwd.view.components.MessageDialog;
 
 
-public class PasswdAboutDialog {
+public class AboutDialog {
 
 	JDialog about;
 	
 	
-	public PasswdAboutDialog() {
+	public AboutDialog() {
 		about = new JDialog();
 		// set dialog components
 		initDialog();
@@ -60,9 +59,9 @@ public class PasswdAboutDialog {
 		ImageIcon logo = null;
 		// add icon
 		try {
-			logo = new ImageIcon(getClass().getResource(PasswdRootView.RES_PATH + PasswdRootView.RES_ICON_APP));
+			logo = new ImageIcon(getClass().getResource(RootView.RES_PATH + RootView.RES_ICON_APP));
 		} catch(NullPointerException e) {
-			new MessageDialog("Cannot load resource " + PasswdRootView.RES_PATH + PasswdRootView.RES_ICON_APP);
+			new MessageDialog("Cannot load resource " + RootView.RES_PATH + RootView.RES_ICON_APP);
 		}
 		
 		//picture

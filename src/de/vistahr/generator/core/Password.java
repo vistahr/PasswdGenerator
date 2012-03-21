@@ -26,100 +26,72 @@
  * 	authors and should not be interpreted as representing official policies, either expressed
  * 	or implied, of Vince.
  */
-package de.vistahr.generator.passwd.model;
+package de.vistahr.generator.core;
 
-import java.util.Observable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
-public class PasswdViewModel extends Observable {
 
-	private String password;
-	private int length;
-	
-	private boolean chkAlphaLC;
-	private boolean chkAlphaUC;
-	private boolean chkSpecial;
-	private boolean chkNumeric;
+public class Password {
 	
 	
-	public PasswdViewModel(String p, int l) {
-		password = p;
-		length = l;
-	}
-	
-	
-	public String getPassword() {
-		return password;
-	}
-	
-	public int getLength() {
-		return length;
-	}
-		
-	
-	
-	public void setPassword(String p) {
-		password = new String(p);
-		setChanged();
-		notifyObservers(this);
-	}
-	
-	public void setLength(int l) {
-		// only positive
-		if(l <= 0) {
-			throw new IllegalArgumentException("Length empty");
+	public static String generate(int length, ArrayList<Keys> keys) {
+		if(length <= 0) {
+			throw new IllegalArgumentException("Non valid length");
 		}
-		length = l;
-		setChanged();
-		notifyObservers(this);
+		
+		StringBuilder password = new StringBuilder();
+		
+		for(int i=0;i<length;i++) {
+			password.append(generateRandomChar(keys));
+		}
+		
+		return password.toString();
 	}
 
+	
+	public static char generateRandomChar(ArrayList<Keys> keys) {
+		Iterator<Keys> iter = keys.iterator();
+		
+		ArrayList<Integer> totalRands = new ArrayList<Integer>();
+		
 
-	public boolean isChkAlphaLC() {
-		return chkAlphaLC;
-	}
-
-
-	public void setChkAlphaLC(boolean chkAlphaLC) {
-		this.chkAlphaLC = chkAlphaLC;
-		setChanged();
-		notifyObservers(this);
-	}
-
-
-	public boolean isChkAlphaUC() {
-		return chkAlphaUC;
-	}
-
-
-	public void setChkAlphaUC(boolean chkAlphaUC) {
-		this.chkAlphaUC = chkAlphaUC;
-		setChanged();
-		notifyObservers(this);
-	}
-
-
-	public boolean isChkSpecial() {
-		return chkSpecial;
-	}
-
-
-	public void setChkSpecial(boolean chkSpecial) {
-		this.chkSpecial = chkSpecial;
-		setChanged();
-		notifyObservers(this);
-	}
-
-
-	public boolean isChkNumeric() {
-		return chkNumeric;
-	}
-
-
-	public void setChkNumeric(boolean chkNumeric) {
-		this.chkNumeric = chkNumeric;
-		setChanged();
-		notifyObservers(this);
+		while(iter.hasNext()) {
+			switch(iter.next()) {
+				case ALPHA_LC:
+					// >= 97 - 122 <=
+					totalRands.add(randomBetween(97,122));
+					break;
+				case ALPHA_UC:
+					// >= 65 - 90 <=
+					totalRands.add(randomBetween(65,90));
+					break;
+				case SPECIAL:
+					// >= 33 - 47 <=
+					totalRands.add(randomBetween(33,47));
+					// >= 58 - 64 <=
+					totalRands.add(randomBetween(58,64));
+					// >= 91 - 96 <=
+					totalRands.add(randomBetween(91,96));
+					// >= 123 - 126 <=
+					totalRands.add(randomBetween(123,126));
+					break;
+				case NUMERIC:
+					// >= 48 - 57 <=
+					totalRands.add(randomBetween(48,57));
+					break;
+			}
+		}
+		int tmpIntChar = (int)totalRands.get(randomBetween(0, totalRands.size()-1));
+		
+		return (char)tmpIntChar;
 	}
 	
+	
+	private static int randomBetween(int min, int max) {
+		Random rand = new Random();
+		 return rand.nextInt(max-min+1)+min;
+	}
 	
 }

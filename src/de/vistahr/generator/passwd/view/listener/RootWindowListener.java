@@ -3,12 +3,12 @@ package de.vistahr.generator.passwd.view.listener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.PasswdRootView;
+import de.vistahr.generator.passwd.model.RootViewModel;
+import de.vistahr.generator.passwd.view.components.RootView;
 
 public class RootWindowListener extends AbstractListener implements WindowListener {
 
-	public RootWindowListener(PasswdViewModel m, PasswdRootView v) {
+	public RootWindowListener(RootViewModel m, RootView v) {
 		super(m, v);
 	}
 
@@ -20,13 +20,12 @@ public class RootWindowListener extends AbstractListener implements WindowListen
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		view.getMainFrame().close();
+		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
-
+		view.getMainFrame().close();
 	}
 
 	@Override

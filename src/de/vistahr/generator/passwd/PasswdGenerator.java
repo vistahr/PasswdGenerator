@@ -28,19 +28,19 @@
  */
 package de.vistahr.generator.passwd;
 
-import de.vistahr.generator.passwd.controller.PasswdController;
-import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.PasswdRootView;
+import de.vistahr.generator.passwd.controller.RootController;
+import de.vistahr.generator.passwd.model.RootViewModel;
+import de.vistahr.generator.passwd.view.components.RootView;
 
 public class PasswdGenerator {
 
 	
 	
 	public static void main(String[] args) {
-		PasswdViewModel model = new PasswdViewModel(new String(""), 0);
-		PasswdRootView view = new PasswdRootView(model);
+		RootViewModel model = new RootViewModel(new String(""), 0);
+		RootView view = new RootView(model);
 		
-		new PasswdController(model, view);
+		new RootController(model, view);
 	}
 	
 }

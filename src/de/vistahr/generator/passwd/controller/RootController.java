@@ -28,9 +28,11 @@
  */
 package de.vistahr.generator.passwd.controller;
 
-import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.PasswdRootView;
+import de.vistahr.generator.passwd.model.RootViewModel;
+import de.vistahr.generator.passwd.view.components.RootView;
 import de.vistahr.generator.passwd.view.listener.AboutListener;
+import de.vistahr.generator.passwd.view.listener.AlphaLCListener;
+import de.vistahr.generator.passwd.view.listener.AlphaUCListener;
 import de.vistahr.generator.passwd.view.listener.ChangeLengthListener;
 import de.vistahr.generator.passwd.view.listener.CopyListener;
 import de.vistahr.generator.passwd.view.listener.ExitListener;
@@ -41,13 +43,13 @@ import de.vistahr.generator.passwd.view.listener.ResizeListener;
 import de.vistahr.generator.passwd.view.listener.SpecialKeyListener;
 
 
-public class PasswdController {
+public class RootController {
 	
-	private PasswdViewModel model;
-	private PasswdRootView view;
+	private RootViewModel model;
+	private RootView view;
 
 	
-	public PasswdController(PasswdViewModel m, PasswdRootView v) {
+	public RootController(RootViewModel m, RootView v) {
 		model = m;
 		view = v;
 		

@@ -1,15 +1,14 @@
-package de.vistahr.generator.passwd.controller;
+package de.vistahr.generator.passwd.view.listener;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.PasswdRootView;
-import de.vistahr.generator.passwd.view.listener.AbstractListener;
+import de.vistahr.generator.passwd.model.RootViewModel;
+import de.vistahr.generator.passwd.view.components.RootView;
 
 public class AlphaLCListener extends AbstractListener implements ChangeListener {
 
-	public AlphaLCListener(PasswdViewModel m, PasswdRootView v) {
+	public AlphaLCListener(RootViewModel m, RootView v) {
 		super(m, v);
 	}
 

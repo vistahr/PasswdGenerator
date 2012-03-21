@@ -7,7 +7,6 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import de.vistahr.generator.passwd.view.PasswdRootView;
 
 public class MainFrame extends JFrame {
 
@@ -22,17 +21,16 @@ public class MainFrame extends JFrame {
 		
 		// add icon
 		try {
-			Image icon = new ImageIcon(getClass().getResource(PasswdRootView.RES_PATH + PasswdRootView.RES_ICON_APP)).getImage();
+			Image icon = new ImageIcon(getClass().getResource(RootView.RES_PATH + RootView.RES_ICON_APP)).getImage();
 				setIconImage(icon);
 		} catch(NullPointerException e) {
-			new MessageDialog("Cannot load resource " + PasswdRootView.RES_PATH + PasswdRootView.RES_ICON_APP);
+			new MessageDialog("Cannot load resource " + RootView.RES_PATH + RootView.RES_ICON_APP);
 		}
 	}
 	
 	public void close() {
 		setVisible(false);
 		dispose();
-		System.exit(0);
 	}
 
 }

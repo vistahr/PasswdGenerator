@@ -1,15 +1,15 @@
 package de.vistahr.generator.passwd.view.listener;
 
-import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.PasswdRootView;
+import de.vistahr.generator.passwd.model.RootViewModel;
+import de.vistahr.generator.passwd.view.components.RootView;
 
 public abstract class AbstractListener {
 
-	protected PasswdRootView view;
-	protected PasswdViewModel model;
+	protected RootView view;
+	protected RootViewModel model;
 	
 	
-	public AbstractListener(PasswdViewModel m, PasswdRootView v) {
+	public AbstractListener(RootViewModel m, RootView v) {
 		view = v;
 		model = m;
 	}

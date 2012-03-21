@@ -4,16 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import de.vistahr.generator.Keys;
-import de.vistahr.generator.Password;
-import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.PasswdRootView;
+import de.vistahr.generator.core.Keys;
+import de.vistahr.generator.core.Password;
+import de.vistahr.generator.passwd.model.RootViewModel;
 import de.vistahr.generator.passwd.view.components.MessageDialog;
+import de.vistahr.generator.passwd.view.components.RootView;
 
 public class GenerateListener extends AbstractListener implements ActionListener {
 	
 	
-	public GenerateListener(PasswdViewModel m, PasswdRootView v) {
+	public GenerateListener(RootViewModel m, RootView v) {
 		super(m, v);
 	}
 

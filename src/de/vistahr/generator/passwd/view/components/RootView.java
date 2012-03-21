@@ -26,7 +26,7 @@
  * 	authors and should not be interpreted as representing official policies, either expressed
  * 	or implied, of Vince.
  */
-package de.vistahr.generator.passwd.view;
+package de.vistahr.generator.passwd.view.components;
 
 import java.awt.Font;
 import java.util.Observable;
@@ -43,14 +43,12 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.components.MainFrame;
-import de.vistahr.generator.passwd.view.components.PasswdStrengthSlider;
+import de.vistahr.generator.passwd.model.RootViewModel;
 import edu.cmu.relativelayout.BindingFactory;
 import edu.cmu.relativelayout.RelativeConstraints;
 import edu.cmu.relativelayout.RelativeLayout;
 
-public class PasswdRootView implements Observer {
+public class RootView implements Observer {
 	
 	public static final String APP_NAME = "PasswdGenerator";
 	
@@ -66,7 +64,7 @@ public class PasswdRootView implements Observer {
 	private JCheckBox chkAlphaLC;
 	private JCheckBox chkAlphaUC;
 	private JCheckBox chksepcialKeys;
-	private PasswdMenu menu;
+	private Menu menu;
 
 	public JTextField getTxtPasswdResult() {
 		return txtPasswdResult;
@@ -109,7 +107,7 @@ public class PasswdRootView implements Observer {
 	}
 
 
-	public PasswdMenu getMainMenu() {
+	public Menu getMainMenu() {
 		return menu;
 	}
 	
@@ -126,7 +124,7 @@ public class PasswdRootView implements Observer {
 	
 
 
-	public PasswdRootView(Observable model) {
+	public RootView(Observable model) {
 		model.addObserver(this);
 		initLayout();
 		mainFrame.setVisible(true);
@@ -180,7 +178,7 @@ public class PasswdRootView implements Observer {
 		btnGenerate = new JButton("Generate");
 		
 		// slider with manual labels
-		sldLength = new PasswdStrengthSlider(JSlider.HORIZONTAL, 1, 30, 1);
+		sldLength = new StrengthSlider(JSlider.HORIZONTAL, 1, 30, 1);
 		
 		
 		// mainpanel
@@ -205,7 +203,7 @@ public class PasswdRootView implements Observer {
 		
 		
 		// menu
-		menu = new PasswdMenu();
+		menu = new Menu();
 		mainFrame.setJMenuBar(menu.getMenuBar());
 		
 	}
@@ -213,12 +211,12 @@ public class PasswdRootView implements Observer {
 	
 	@Override
 	public void update(Observable o, Object model) {
-		getSldLength().setValue(((PasswdViewModel)model).getLength());
-		getTxtPasswdResult().setText(((PasswdViewModel)model).getPassword());
-		getChkAlphaLC().setSelected(((PasswdViewModel)model).isChkAlphaLC());
-		getChkAlphaUC().setSelected(((PasswdViewModel)model).isChkAlphaUC());
-		getChkNumeric().setSelected(((PasswdViewModel)model).isChkNumeric());
-		getChkSepcialKeys().setSelected(((PasswdViewModel)model).isChkSpecial());
+		getSldLength().setValue(((RootViewModel)model).getLength());
+		getTxtPasswdResult().setText(((RootViewModel)model).getPassword());
+		getChkAlphaLC().setSelected(((RootViewModel)model).isChkAlphaLC());
+		getChkAlphaUC().setSelected(((RootViewModel)model).isChkAlphaUC());
+		getChkNumeric().setSelected(((RootViewModel)model).isChkNumeric());
+		getChkSepcialKeys().setSelected(((RootViewModel)model).isChkSpecial());
 	}
 	
 

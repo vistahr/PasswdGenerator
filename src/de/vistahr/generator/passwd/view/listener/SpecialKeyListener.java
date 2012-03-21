@@ -3,13 +3,13 @@ package de.vistahr.generator.passwd.view.listener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.PasswdRootView;
+import de.vistahr.generator.passwd.model.RootViewModel;
+import de.vistahr.generator.passwd.view.components.RootView;
 
 public class SpecialKeyListener extends AbstractListener implements
 		ChangeListener {
 
-	public SpecialKeyListener(PasswdViewModel m, PasswdRootView v) {
+	public SpecialKeyListener(RootViewModel m, RootView v) {
 		super(m, v);
 	}
 

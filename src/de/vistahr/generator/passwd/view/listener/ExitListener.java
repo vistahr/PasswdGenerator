@@ -3,12 +3,12 @@ package de.vistahr.generator.passwd.view.listener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.PasswdRootView;
+import de.vistahr.generator.passwd.model.RootViewModel;
+import de.vistahr.generator.passwd.view.components.RootView;
 
 public class ExitListener extends AbstractListener implements ActionListener {
 
-	public ExitListener(PasswdViewModel m, PasswdRootView v) {
+	public ExitListener(RootViewModel m, RootView v) {
 		super(m, v);
 	}
 
