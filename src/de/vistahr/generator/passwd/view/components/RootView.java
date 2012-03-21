@@ -28,13 +28,11 @@
  */
 package de.vistahr.generator.passwd.view.components;
 
-import java.awt.Font;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -64,7 +62,9 @@ public class RootView implements Observer {
 	private JCheckBox chkAlphaLC;
 	private JCheckBox chkAlphaUC;
 	private JCheckBox chksepcialKeys;
-	private Menu menu;
+	private MainMenu mainMenu;
+	private JLabel lblLength;
+	private JLabel lblPassword;
 
 	public JTextField getTxtPasswdResult() {
 		return txtPasswdResult;
@@ -107,8 +107,8 @@ public class RootView implements Observer {
 	}
 
 
-	public Menu getMainMenu() {
-		return menu;
+	public MainMenu getMainMenu() {
+		return mainMenu;
 	}
 	
 	
@@ -126,7 +126,10 @@ public class RootView implements Observer {
 
 	public RootView(Observable model) {
 		model.addObserver(this);
+		
 		initLayout();
+		positionComponents();
+		
 		mainFrame.setVisible(true);
 	}
 	
@@ -151,36 +154,42 @@ public class RootView implements Observer {
 			e.printStackTrace();
 		}
 		
-
 		// mainframe
 		mainFrame = new MainFrame(APP_NAME);
 		
-		// for relative layoutmanager
-		BindingFactory bf = new BindingFactory();
 		
+		//// components
+		///////////////
 		
-		// components
+		// checkbxses
 		chkNumeric = new JCheckBox("Numeric");
 		chkAlphaLC = new JCheckBox("Alpha lowercase");
 		chkAlphaUC = new JCheckBox("Alpha uppercase");
 		chksepcialKeys = new JCheckBox("SpecialKeys");
 		
 		// labels for passwd & strength
-		JLabel lblLength = new JLabel("Password strength:");
-		JLabel lblPassword = new JLabel("Password:");
+		lblLength = new JLabel("Password strength:");
+		lblPassword = new JLabel("Password:");
 				
 		btnCopy = new JButton("copy");
 		
-		txtPasswdResult = new JTextField();
-		txtPasswdResult.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 25));
-		txtPasswdResult.setEditable(false);
+		txtPasswdResult = new PasswordResult();
 		
 		btnGenerate = new JButton("Generate");
 		
 		// slider with manual labels
 		sldLength = new StrengthSlider(JSlider.HORIZONTAL, 1, 30, 1);
 		
-		
+		// menu
+		mainMenu = new MainMenu();
+		mainFrame.setJMenuBar(mainMenu);
+	}
+	
+	
+	private void positionComponents() {
+		// for relative layoutmanager
+		BindingFactory bf = new BindingFactory();
+				
 		// mainpanel
 		JPanel mainPanel = new JPanel(new RelativeLayout());
 		
@@ -200,12 +209,6 @@ public class RootView implements Observer {
 		mainPanel.add(btnGenerate, new RelativeConstraints(bf.bottomEdge(), bf.rightEdge()));
 		
 		mainFrame.add(mainPanel);
-		
-		
-		// menu
-		menu = new Menu();
-		mainFrame.setJMenuBar(menu.getMenuBar());
-		
 	}
 	
 	

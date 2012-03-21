@@ -37,10 +37,8 @@ import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
 
-public class Menu {
+public class MainMenu extends JMenuBar {
 	
-	// bar
-	JMenuBar menuBar;
 	// main menu
 	JMenu fileMenu;
 	JMenu helpMenu;
@@ -52,11 +50,7 @@ public class Menu {
 	
 	JMenuItem aboutItem;
 	
-	
-	public JMenuBar getMenuBar() {
-		return menuBar;
-	}
-	
+
 
 	public JMenuItem getAboutItem() {
 		return aboutItem;
@@ -83,8 +77,8 @@ public class Menu {
 	}
 
 
-	public Menu() {
-		menuBar = new JMenuBar();
+	public MainMenu() {
+		super();
 		buildMenu();
 	}
 	
@@ -118,8 +112,8 @@ public class Menu {
 		aboutItem = new JMenuItem("About PasswdGenerator");
 		helpMenu.add(aboutItem);
 		
-		menuBar.add(fileMenu);
-		menuBar.add(helpMenu);
+		add(fileMenu);
+		add(helpMenu);
 	}
 	
 	
