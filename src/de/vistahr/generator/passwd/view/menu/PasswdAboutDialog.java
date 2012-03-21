@@ -52,6 +52,7 @@ public class PasswdAboutDialog {
 		about.setVisible(true);
 	}
 	
+	
 	private void initDialog() {
 		JPanel mainPanel = new JPanel();
 		
@@ -68,7 +69,7 @@ public class PasswdAboutDialog {
 		
 		//name
 		JLabel lblName = new JLabel();
-		lblName.setText("<html><br /><b>PasswdGenerator</b><br /><br /></html>");
+		lblName.setText("<html><b>PasswdGenerator</b><br /><br /></html>");
 		
 		// about
 		JLabel lblAbout = new JLabel();

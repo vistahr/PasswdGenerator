@@ -35,6 +35,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 import javax.swing.JTextField;
@@ -45,26 +47,23 @@ import de.vistahr.generator.Keys;
 import de.vistahr.generator.Password;
 import de.vistahr.generator.passwd.model.PasswdViewModel;
 import de.vistahr.generator.passwd.view.PasswdView;
-import de.vistahr.generator.passwd.view.menu.PasswdMenu;
+import de.vistahr.generator.passwd.view.menu.PasswdAboutDialog;
 
 
-public class PasswdMainController {
+public class PasswdController {
 	
 	private PasswdViewModel model;
 	private PasswdView view;
+
 	
-	
-	public PasswdMainController(PasswdViewModel m, PasswdView v) {
+	public PasswdController(PasswdViewModel m, PasswdView v) {
 		model = m;
 		view = v;
 		addListenersAction();
 		initDataAction();
 		
-		// init
-		PasswdMenu pmView = new PasswdMenu();
-		new PasswdMenuController(pmView);
-		// connect with main view
-		view.setJMenuBar(pmView.getMainMenu());
+
+		//view.setJMenuBar(pmView.getMainMenu());		
 	}
 	
 	
@@ -140,6 +139,49 @@ public class PasswdMainController {
 				model.setChkSpecial(view.getChkSepcialKeys().isSelected());
 			}
 		});
+		view.getMainMenu().getExitItem().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				quitAction();
+			}
+		});
+		view.getMainMenu().getCopyItem().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				copyPasswdToClipboardAction();
+			}
+		});
+		view.getMainMenu().getGenerateItem().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				generateAction();
+			}
+		});
+		view.getMainMenu().getAboutItem().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new PasswdAboutDialog();
+			}
+		});
+		view.getMainFrame().addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent arg0) {}
+			@Override
+			public void windowIconified(WindowEvent arg0) {}
+			@Override
+			public void windowDeiconified(WindowEvent arg0) {}
+			@Override
+			public void windowDeactivated(WindowEvent arg0) {}
+			@Override
+			public void windowClosing(WindowEvent arg0) {}	
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				quitAction();
+			}	
+			@Override
+			public void windowActivated(WindowEvent arg0) {}
+		});
 	}
 	
 	
@@ -198,6 +240,11 @@ public class PasswdMainController {
 	private void resizeTxtPasswdResultAction(ComponentEvent ev) {
 		Integer newHeigth = Integer.valueOf(((JTextField)ev.getSource()).getHeight()/2);
 		view.getTxtPasswdResult().setFont(new Font(Font.SANS_SERIF, Font.PLAIN, newHeigth));
+	}
+	
+	private void quitAction() {
+		view.getMainFrame().setVisible(false);
+		view.getMainFrame().dispose();
 	}
 	
 }

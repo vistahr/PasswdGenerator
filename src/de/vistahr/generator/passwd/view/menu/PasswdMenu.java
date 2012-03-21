@@ -28,25 +28,33 @@
  */
 package de.vistahr.generator.passwd.view.menu;
 
+import java.awt.event.KeyEvent;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
+import javax.swing.KeyStroke;
 
 
 public class PasswdMenu {
 	
 	// bar
-	JMenuBar mainMenu;
+	JMenuBar menuBar;
 	// main menu
 	JMenu fileMenu;
 	JMenu helpMenu;
 	//items
 	JMenuItem copyItem;
+	JMenuItem generateItem;
+	JMenuItem propertiesItem;
+	JMenuItem exitItem;
+	
 	JMenuItem aboutItem;
 	
 	
-	public JMenuBar getMainMenu() {
-		return mainMenu;
+	public JMenuBar getMenuBar() {
+		return menuBar;
 	}
 	
 
@@ -60,8 +68,23 @@ public class PasswdMenu {
 	}
 
 
+	public JMenuItem getGenerateItem() {
+		return generateItem;
+	}
+
+
+	public JMenuItem getPropertiesItem() {
+		return propertiesItem;
+	}
+
+
+	public JMenuItem getExitItem() {
+		return exitItem;
+	}
+
+
 	public PasswdMenu() {
-		mainMenu = new JMenuBar();
+		menuBar = new JMenuBar();
 		buildMenu();
 	}
 	
@@ -70,17 +93,33 @@ public class PasswdMenu {
 		// file menu
 		fileMenu = new JMenu("File");
 		copyItem = new JMenuItem("Copy");
+		copyItem.setMnemonic(KeyEvent.VK_C);
+		copyItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK));
 		fileMenu.add(copyItem);
+		generateItem = new JMenuItem("Generate");
+		generateItem.setMnemonic(KeyEvent.VK_G);
+		generateItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, KeyEvent.CTRL_MASK));
+		fileMenu.add(generateItem);
+		fileMenu.add(new JSeparator());
+		
+		propertiesItem = new JMenuItem("Properties");
+		propertiesItem.setMnemonic(KeyEvent.VK_R);
+		fileMenu.add(propertiesItem);
+		fileMenu.add(new JSeparator());
+		
+		exitItem = new JMenuItem("Exit");
+		exitItem.setMnemonic(KeyEvent.VK_X);
+		fileMenu.add(exitItem);
 		
 		
 		// Help menu
 		helpMenu = new JMenu("Help");
 		//items
-		aboutItem = new JMenuItem("About");
+		aboutItem = new JMenuItem("About PasswdGenerator");
 		helpMenu.add(aboutItem);
 		
-		mainMenu.add(fileMenu);
-		mainMenu.add(helpMenu);
+		menuBar.add(fileMenu);
+		menuBar.add(helpMenu);
 	}
 	
 	

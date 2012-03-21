@@ -69,7 +69,7 @@ public class PasswdView implements Observer {
 	private JCheckBox chkAlphaLC;
 	private JCheckBox chkAlphaUC;
 	private JCheckBox chksepcialKeys;
-	private PasswdMenu mainMenu;
+	private PasswdMenu menu;
 
 	public JTextField getTxtPasswdResult() {
 		return txtPasswdResult;
@@ -113,10 +113,15 @@ public class PasswdView implements Observer {
 
 
 	public PasswdMenu getMainMenu() {
-		return mainMenu;
+		return menu;
 	}
 	
 	
+	public JFrame getMainFrame() {
+		return mainFrame;
+	}
+
+
 	public void setJMenuBar(JMenuBar menu) {
 		mainFrame.setJMenuBar(menu);
 	}
@@ -206,7 +211,7 @@ public class PasswdView implements Observer {
 		
 		// frame settings
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setPreferredSize(new Dimension(520,250));
+		mainFrame.setPreferredSize(new Dimension(520,280));
 		mainFrame.pack();
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setResizable(true);
@@ -218,6 +223,10 @@ public class PasswdView implements Observer {
 		} catch(NullPointerException e) {
 			showMessageDialog("Cannot load resource " + RES_PATH + RES_ICON_APP);
 		}
+		
+		// menu
+		menu = new PasswdMenu();
+		mainFrame.setJMenuBar(menu.getMenuBar());
 		
 	}
 	
