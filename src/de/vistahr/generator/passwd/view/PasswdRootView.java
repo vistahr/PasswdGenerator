@@ -28,39 +28,36 @@
  */
 package de.vistahr.generator.passwd.view;
 
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
-import java.util.Hashtable;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.menu.PasswdMenu;
+import de.vistahr.generator.passwd.view.components.MainFrame;
+import de.vistahr.generator.passwd.view.components.PasswdStrengthSlider;
 import edu.cmu.relativelayout.BindingFactory;
 import edu.cmu.relativelayout.RelativeConstraints;
 import edu.cmu.relativelayout.RelativeLayout;
 
-public class PasswdView implements Observer {
+public class PasswdRootView implements Observer {
 	
 	public static final String APP_NAME = "PasswdGenerator";
 	
 	public static final String RES_PATH = "/res/";
 	public static final String RES_ICON_APP = "key.png";
 	
-	private JFrame mainFrame;
+	private MainFrame mainFrame;
 	private JSlider sldLength;
 	private JTextField txtPasswdResult;
 	private JButton btnCopy;
@@ -117,7 +114,7 @@ public class PasswdView implements Observer {
 	}
 	
 	
-	public JFrame getMainFrame() {
+	public MainFrame getMainFrame() {
 		return mainFrame;
 	}
 
@@ -129,7 +126,7 @@ public class PasswdView implements Observer {
 	
 
 
-	public PasswdView(Observable model) {
+	public PasswdRootView(Observable model) {
 		model.addObserver(this);
 		initLayout();
 		mainFrame.setVisible(true);
@@ -145,12 +142,20 @@ public class PasswdView implements Observer {
 		// systemdesign (look)
 		try {
 	        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-	    } catch (Exception e) {
+	        
+	    } catch (UnsupportedLookAndFeelException e) {
 	        e.printStackTrace();
-	    }
+	    } catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
 		
+
 		// mainframe
-		mainFrame = new JFrame(APP_NAME);
+		mainFrame = new MainFrame(APP_NAME);
 		
 		// for relative layoutmanager
 		BindingFactory bf = new BindingFactory();
@@ -175,18 +180,7 @@ public class PasswdView implements Observer {
 		btnGenerate = new JButton("Generate");
 		
 		// slider with manual labels
-		int sldLengthMaxVal = 30;
-		sldLength = new JSlider(JSlider.HORIZONTAL,1,sldLengthMaxVal,1);
-		sldLength.setMajorTickSpacing(sldLengthMaxVal/2);
-		sldLength.setPaintTicks(true);
-		sldLength.setPaintLabels(true);
-		
-		// sliderlabels
-		Hashtable<Integer, JLabel> sldLengthLabelTable = new Hashtable<Integer, JLabel>();
-		sldLengthLabelTable.put(new Integer(1), new JLabel("Low"));
-		sldLengthLabelTable.put(new Integer(sldLengthMaxVal/2), new JLabel("Middle"));
-		sldLengthLabelTable.put(new Integer(sldLengthMaxVal), new JLabel("High"));
-		sldLength.setLabelTable(sldLengthLabelTable);		
+		sldLength = new PasswdStrengthSlider(JSlider.HORIZONTAL, 1, 30, 1);
 		
 		
 		// mainpanel
@@ -209,20 +203,6 @@ public class PasswdView implements Observer {
 		
 		mainFrame.add(mainPanel);
 		
-		// frame settings
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setPreferredSize(new Dimension(520,280));
-		mainFrame.pack();
-		mainFrame.setLocationRelativeTo(null);
-		mainFrame.setResizable(true);
-		
-		// add icon
-		try {
-			Image icon = new ImageIcon(getClass().getResource(RES_PATH + RES_ICON_APP)).getImage();
-			mainFrame.setIconImage(icon);
-		} catch(NullPointerException e) {
-			showMessageDialog("Cannot load resource " + RES_PATH + RES_ICON_APP);
-		}
 		
 		// menu
 		menu = new PasswdMenu();
@@ -231,27 +211,15 @@ public class PasswdView implements Observer {
 	}
 	
 	
-	
-	
-
 	@Override
 	public void update(Observable o, Object model) {
 		getSldLength().setValue(((PasswdViewModel)model).getLength());
 		getTxtPasswdResult().setText(((PasswdViewModel)model).getPassword());
-		
 		getChkAlphaLC().setSelected(((PasswdViewModel)model).isChkAlphaLC());
 		getChkAlphaUC().setSelected(((PasswdViewModel)model).isChkAlphaUC());
 		getChkNumeric().setSelected(((PasswdViewModel)model).isChkNumeric());
 		getChkSepcialKeys().setSelected(((PasswdViewModel)model).isChkSpecial());
 	}
 	
-/*
-	public void showMessageDialog(String message) {
-		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.WARNING_MESSAGE);
-	}*/
-	
-	public static void showMessageDialog(String message) {
-		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.WARNING_MESSAGE);
-	}	
-	
+
 }

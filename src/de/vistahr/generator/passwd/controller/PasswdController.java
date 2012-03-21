@@ -28,46 +28,36 @@
  */
 package de.vistahr.generator.passwd.controller;
 
-import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.util.ArrayList;
-
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import de.vistahr.generator.Keys;
-import de.vistahr.generator.Password;
 import de.vistahr.generator.passwd.model.PasswdViewModel;
-import de.vistahr.generator.passwd.view.PasswdView;
-import de.vistahr.generator.passwd.view.menu.PasswdAboutDialog;
+import de.vistahr.generator.passwd.view.PasswdRootView;
+import de.vistahr.generator.passwd.view.listener.AboutListener;
+import de.vistahr.generator.passwd.view.listener.ChangeLengthListener;
+import de.vistahr.generator.passwd.view.listener.CopyListener;
+import de.vistahr.generator.passwd.view.listener.ExitListener;
+import de.vistahr.generator.passwd.view.listener.GenerateListener;
+import de.vistahr.generator.passwd.view.listener.RootWindowListener;
+import de.vistahr.generator.passwd.view.listener.NumericListener;
+import de.vistahr.generator.passwd.view.listener.ResizeListener;
+import de.vistahr.generator.passwd.view.listener.SpecialKeyListener;
 
 
 public class PasswdController {
 	
 	private PasswdViewModel model;
-	private PasswdView view;
+	private PasswdRootView view;
 
 	
-	public PasswdController(PasswdViewModel m, PasswdView v) {
+	public PasswdController(PasswdViewModel m, PasswdRootView v) {
 		model = m;
 		view = v;
-		addListenersAction();
-		initDataAction();
 		
-
-		//view.setJMenuBar(pmView.getMainMenu());		
+		addListeners();
+		initData();	
+		initStatus();
 	}
 	
 	
-	private void initDataAction() {
+	private void initData() {
 		// init componentdata
 		model.setLength(6);
 		model.setPassword("");
@@ -76,175 +66,31 @@ public class PasswdController {
 		model.setChkAlphaUC(true);
 		model.setChkNumeric(true);
 		model.setChkSpecial(true);
+	}
+	
+	private void initStatus() {
 		// focus to generate button
 		view.getBtnGenerate().requestFocus();
 	}
 	
 	
-	private void addListenersAction() {
-		view.getBtnGenerate().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					generateAction();
-				} catch(IllegalArgumentException e) {
-					PasswdView.showMessageDialog(e.getMessage());
-				}
-			}
-		});
-		view.getBtnCopy().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				copyPasswdToClipboardAction();
-			}
-		});
-		view.getSldLength().addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				changeLengthAction();
-			}
-		});
-		view.getTxtPasswdResult().addComponentListener(new ComponentListener() {@Override
-			public void componentShown(ComponentEvent e) {}
-			@Override
-			public void componentResized(ComponentEvent e) {
-				resizeTxtPasswdResultAction(e);
-			}
-			@Override
-			public void componentMoved(ComponentEvent e) {}
-			@Override
-			public void componentHidden(ComponentEvent e) {}
-		});
-		view.getChkAlphaLC().addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				model.setChkAlphaLC(view.getChkAlphaLC().isSelected());
-			}
-		});
-		view.getChkAlphaUC().addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				model.setChkAlphaUC(view.getChkAlphaUC().isSelected());
-			}
-		});
-		view.getChkNumeric().addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				model.setChkNumeric(view.getChkNumeric().isSelected());
-			}
-		});
-		view.getChkSepcialKeys().addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				model.setChkSpecial(view.getChkSepcialKeys().isSelected());
-			}
-		});
-		view.getMainMenu().getExitItem().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				quitAction();
-			}
-		});
-		view.getMainMenu().getCopyItem().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				copyPasswdToClipboardAction();
-			}
-		});
-		view.getMainMenu().getGenerateItem().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				generateAction();
-			}
-		});
-		view.getMainMenu().getAboutItem().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new PasswdAboutDialog();
-			}
-		});
-		view.getMainFrame().addWindowListener(new WindowListener() {
-			
-			@Override
-			public void windowOpened(WindowEvent arg0) {}
-			@Override
-			public void windowIconified(WindowEvent arg0) {}
-			@Override
-			public void windowDeiconified(WindowEvent arg0) {}
-			@Override
-			public void windowDeactivated(WindowEvent arg0) {}
-			@Override
-			public void windowClosing(WindowEvent arg0) {}	
-			@Override
-			public void windowClosed(WindowEvent arg0) {
-				quitAction();
-			}	
-			@Override
-			public void windowActivated(WindowEvent arg0) {}
-		});
+	private void addListeners() {
+		view.getBtnGenerate().addActionListener(new GenerateListener(model, view));
+		view.getBtnCopy().addActionListener(new CopyListener(model, view));
+		view.getSldLength().addChangeListener(new ChangeLengthListener(model, view));
+		view.getTxtPasswdResult().addComponentListener(new ResizeListener(model, view));
+		view.getChkAlphaLC().addChangeListener(new AlphaLCListener(model, view));
+		view.getChkAlphaUC().addChangeListener(new AlphaUCListener(model, view));
+		view.getChkNumeric().addChangeListener(new NumericListener(model, view));
+		view.getChkSepcialKeys().addChangeListener(new SpecialKeyListener(model, view));
+		view.getMainMenu().getExitItem().addActionListener(new ExitListener(model, view));
+		view.getMainMenu().getCopyItem().addActionListener(new CopyListener(model, view));
+		view.getMainMenu().getGenerateItem().addActionListener(new GenerateListener(model, view));
+		view.getMainMenu().getAboutItem().addActionListener(new AboutListener(model, view));
+		view.getMainFrame().addWindowListener(new RootWindowListener(model, view));
 	}
 	
-	
-	private void generateAction() {
-		int length = 0;
-		
-		// get the views length
-		try {
-			length = Integer.valueOf(view.getSldLength().getValue());
-		} catch(NumberFormatException e) {
-			PasswdView.showMessageDialog("invalid length data");
-		}
-		
-		// get view data and set the arraylist
-		ArrayList<Keys> keys = new ArrayList<Keys>();
-		if(model.isChkAlphaLC()) {
-			keys.add(Keys.ALPHA_LC);
-		}
-		if(model.isChkAlphaUC()) {
-			keys.add(Keys.ALPHA_UC);
-		}
-		if(model.isChkNumeric()) {
-			keys.add(Keys.NUMERIC);
-		}
-		if(model.isChkSpecial()) {
-			keys.add(Keys.SPECIAL);
-		}
-		
-		// keysize should not <= 0		
-		if(keys.size()<=0) {
-			throw new IllegalArgumentException("no keyset is selected");
-		}
 
-		// generate Password and set the model
-		model.setPassword(Password.generate(length, keys));
-	}
-	
-	
-	private void changeLengthAction() {
-		Integer length = model.getLength();
-		try {
-			length = Integer.valueOf(view.getSldLength().getValue());
-			
-		} catch(NumberFormatException e) {
-			PasswdView.showMessageDialog("invalid length data");
-		}
-		model.setLength(length);
-	}
-	
-	
-	public void copyPasswdToClipboardAction() {
-		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(view.getTxtPasswdResult().getText()), null);
-	}
-	
-	
-	private void resizeTxtPasswdResultAction(ComponentEvent ev) {
-		Integer newHeigth = Integer.valueOf(((JTextField)ev.getSource()).getHeight()/2);
-		view.getTxtPasswdResult().setFont(new Font(Font.SANS_SERIF, Font.PLAIN, newHeigth));
-	}
-	
-	private void quitAction() {
-		view.getMainFrame().setVisible(false);
-		view.getMainFrame().dispose();
-	}
-	
+
+
 }

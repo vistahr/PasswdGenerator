@@ -26,7 +26,7 @@
  * 	authors and should not be interpreted as representing official policies, either expressed
  * 	or implied, of Vince.
  */
-package de.vistahr.generator.passwd.view.menu;
+package de.vistahr.generator.passwd.view;
 
 import java.awt.event.KeyEvent;
 
