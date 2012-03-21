@@ -1,7 +1,7 @@
 package de.vistahr.generator.passwd.view.listener;
 
 import de.vistahr.generator.passwd.model.RootViewModel;
-import de.vistahr.generator.passwd.view.components.RootView;
+import de.vistahr.generator.passwd.view.component.RootView;
 
 public abstract class AbstractListener {
 

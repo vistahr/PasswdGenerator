@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import de.vistahr.generator.core.Keys;
 import de.vistahr.generator.core.Password;
 import de.vistahr.generator.passwd.model.RootViewModel;
-import de.vistahr.generator.passwd.view.components.MessageDialog;
-import de.vistahr.generator.passwd.view.components.RootView;
+import de.vistahr.generator.passwd.view.component.MessageDialog;
+import de.vistahr.generator.passwd.view.component.RootView;
 
 public class GenerateListener extends AbstractListener implements ActionListener {
 	

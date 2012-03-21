@@ -1,4 +1,4 @@
-package de.vistahr.generator.passwd.view.components;
+package de.vistahr.generator.passwd.view.component;
 
 import javax.swing.JOptionPane;
 

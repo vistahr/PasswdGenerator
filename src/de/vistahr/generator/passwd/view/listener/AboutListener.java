@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import de.vistahr.generator.passwd.model.RootViewModel;
-import de.vistahr.generator.passwd.view.components.AboutDialog;
-import de.vistahr.generator.passwd.view.components.RootView;
+import de.vistahr.generator.passwd.view.component.AboutDialog;
+import de.vistahr.generator.passwd.view.component.RootView;
 
 public class AboutListener extends AbstractListener implements ActionListener {
 

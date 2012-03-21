@@ -7,7 +7,7 @@ import java.awt.event.ComponentListener;
 import javax.swing.JTextField;
 
 import de.vistahr.generator.passwd.model.RootViewModel;
-import de.vistahr.generator.passwd.view.components.RootView;
+import de.vistahr.generator.passwd.view.component.RootView;
 
 public class ResizeListener extends AbstractListener implements ComponentListener {
 

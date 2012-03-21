@@ -4,7 +4,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import de.vistahr.generator.passwd.model.RootViewModel;
-import de.vistahr.generator.passwd.view.components.RootView;
+import de.vistahr.generator.passwd.view.component.RootView;
 
 public class AlphaUCListener extends AbstractListener implements ChangeListener {
 

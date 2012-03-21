@@ -26,7 +26,7 @@
  * 	authors and should not be interpreted as representing official policies, either expressed
  * 	or implied, of Vince.
  */
-package de.vistahr.generator.passwd.view.components;
+package de.vistahr.generator.passwd.view.component;
 
 import java.awt.Dimension;
 

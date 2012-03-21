@@ -29,7 +29,7 @@
 package de.vistahr.generator.passwd.controller;
 
 import de.vistahr.generator.passwd.model.RootViewModel;
-import de.vistahr.generator.passwd.view.components.RootView;
+import de.vistahr.generator.passwd.view.component.RootView;
 import de.vistahr.generator.passwd.view.listener.AboutListener;
 import de.vistahr.generator.passwd.view.listener.AlphaLCListener;
 import de.vistahr.generator.passwd.view.listener.AlphaUCListener;
